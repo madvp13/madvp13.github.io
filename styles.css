@@ -15,8 +15,8 @@
   --tab-3: #34383A;
   --tab-ink: #F7F5F0;
 
-  --font-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
-  --font-body: "Figtree", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Host Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-label: "IBM Plex Mono", ui-monospace, Menlo, monospace;
 
   --col: 1040px;
@@ -65,7 +65,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 8px 24px; padding-block: 30px; transition: padding-block 0.3s ease;
 }
-.wordmark { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; text-decoration: none; letter-spacing: -0.015em; transition: font-size 0.3s ease; }
+.wordmark { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; text-decoration: none; letter-spacing: -0.005em; transition: font-size 0.3s ease; }
 .site-header.is-scrolled { border-bottom-color: var(--line); }
 .site-header.is-scrolled .wrap { padding-block: 14px; }
 .site-header.is-scrolled .wordmark { font-size: 1.12rem; }
@@ -74,12 +74,15 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 .nav a:hover { color: var(--ink); }
 [id] { scroll-margin-top: 90px; }
 
+/* Interface text (navigation, buttons, links to more) stays in the heading sans; reading text uses the serif */
+.nav, .btn, .fb-btn, .lb-close, .more, .all-work, .back, .chip, .fb-count { font-family: var(--font-display); }
+
 /* Type */
 .eyebrow {
   font-family: var(--font-label); font-size: 0.78rem; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--muted); margin: 0 0 18px;
 }
-h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; letter-spacing: -0.01em; text-wrap: balance; margin: 0; }
 h1 { font-size: clamp(2.5rem, 6.4vw, 4.6rem); line-height: 1.02; }
 h2 { font-size: clamp(1.7rem, 3.4vw, 2.4rem); line-height: 1.12; }
 h3 { font-size: 1.3rem; line-height: 1.25; }
@@ -132,6 +135,7 @@ figcaption { font-size: 0.88rem; color: var(--muted); margin-top: 10px; }
 .step { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 16px 48px; padding-block: 32px; border-top: 1px solid var(--line); }
 .step:last-child { border-bottom: 1px solid var(--line); }
 .step-num { font-family: var(--font-label); font-size: 0.8rem; color: var(--accent); display: block; margin-bottom: 8px; }
+.step h3 { font-size: clamp(1.45rem, 2.4vw, 1.75rem); line-height: 1.2; }
 .step p { color: var(--muted); max-width: 60ch; }
 
 /* Experience: horizontal timeline, newest first; turns vertical on narrow screens */
@@ -329,6 +333,19 @@ a.subcard:hover .shot { transform: translateY(-4px); }
 .finished-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 20px; }
 .finished-grid .tall { grid-row: 1 / 3; aspect-ratio: 3 / 4; }
 .finished-grid .wide { aspect-ratio: auto; height: 100%; }
+
+/* Paper texture on the case study panels: fine grain plus a faint linen weave, drawn under the content */
+.folder, .tab, .ftab { position: relative; isolation: isolate; }
+.folder::before, .tab::before, .ftab::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.035) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px);
+  background-size: 240px 240px, auto, auto;
+  mix-blend-mode: multiply; opacity: 0.45;
+}
+.folder.is-green::before, .folder.is-dark::before, .tab-2::before, .tab-3::before, .ftab-2::before, .ftab-3::before { mix-blend-mode: soft-light; opacity: 0.9; }
 
 @media (max-width: 860px) {
   .zoom-hint { display: inline; }
