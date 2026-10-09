@@ -347,6 +347,10 @@ a.subcard:hover .shot { transform: translateY(-4px); }
 }
 .folder.is-green::before, .folder.is-dark::before, .tab-2::before, .tab-3::before, .ftab-2::before, .ftab-3::before { mix-blend-mode: soft-light; opacity: 0.9; }
 
+/* Headings on the paper panels read as ink: roughened edges, uneven density, and on the light panel the grain shows through */
+.folder h1, .folder h2, .folder h3 { filter: url(#ink); }
+.folder:not(.is-green):not(.is-dark) h1, .folder:not(.is-green):not(.is-dark) h2, .folder:not(.is-green):not(.is-dark) h3 { mix-blend-mode: multiply; }
+
 @media (max-width: 860px) {
   .zoom-hint { display: inline; }
   .wpanel { grid-template-columns: minmax(0, 1fr); }
