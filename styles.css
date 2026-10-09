@@ -109,9 +109,11 @@ p { margin: 0; }
 .ph span { font-size: 0.85rem; max-width: 30ch; }
 .shot.has-img .ph { display: none; }
 /* Natural frames: the frame takes the image's own shape, so nothing is cropped (used for full-page screenshots) */
-.shot.natural { aspect-ratio: 3 / 4; }
+.shot.natural { aspect-ratio: var(--ratio, 3 / 4); }
 .shot.natural.has-img { aspect-ratio: auto; }
 .shot.natural.has-img img { position: static; width: 100%; height: auto; }
+.align-top { align-items: start; }
+.shot.natural.has-img { background: transparent; }
 .shot.logo-lineup img { padding: 4% 5%; }
 figcaption { font-size: 0.88rem; color: var(--muted); margin-top: 10px; }
 .figure { margin: 0; display: grid; }
