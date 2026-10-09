@@ -1,4 +1,4 @@
-// Ink filter for headings on the paper panels: slightly rough edges and uneven ink density, like letterpress on paper.
+// Ink filter for headings on the paper: slightly rough, printed-looking edges with solid, even ink.
 (function () {
   var ns = 'http://www.w3.org/2000/svg';
   var svg = document.createElementNS(ns, 'svg');
@@ -8,9 +8,6 @@
     '<filter id="ink" x="-3%" y="-15%" width="106%" height="130%" color-interpolation-filters="sRGB">' +
       '<feTurbulence type="fractalNoise" baseFrequency="0.55" numOctaves="2" seed="4" result="edge"/>' +
       '<feDisplacementMap in="SourceGraphic" in2="edge" scale="0.9" xChannelSelector="R" yChannelSelector="G" result="rough"/>' +
-      '<feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="3" seed="11" result="grain"/>' +
-      '<feColorMatrix in="grain" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -0.5 0 0 0 1.12" result="density"/>' +
-      '<feComposite in="rough" in2="density" operator="in"/>' +
     '</filter>';
   document.body.insertBefore(svg, document.body.firstChild);
 })();
