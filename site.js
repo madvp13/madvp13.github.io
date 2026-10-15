@@ -197,3 +197,27 @@ document.querySelectorAll('.flipbook').forEach(function (book) {
   });
   render(0);
 });
+
+// Home folder pile: clicking a back folder's tab (or the strip of it that shows) moves it to the front of the pile.
+// Only the front folder's title and button open its case study.
+document.querySelectorAll('.folder-stack').forEach(function (stack) {
+  var cards = Array.prototype.slice.call(stack.querySelectorAll('.scard'));
+  var order = cards.slice();           // back to front
+  function render() {
+    order.forEach(function (c, k) {
+      var isFront = k === order.length - 1;
+      c.style.setProperty('--slot', k);
+      c.classList.toggle('is-front', isFront);
+      c.querySelector('.stab').setAttribute('aria-pressed', isFront ? 'true' : 'false');
+      c.querySelectorAll('a').forEach(function (a) { a.tabIndex = isFront ? 0 : -1; });
+    });
+  }
+  cards.forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      if (card === order[order.length - 1]) return;
+      e.preventDefault();
+      order.splice(order.indexOf(card), 1); order.push(card); render();
+    });
+  });
+  render();
+});

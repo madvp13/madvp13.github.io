@@ -333,7 +333,7 @@ a.subcard:hover .shot { transform: translateY(-4px); }
 
 /* Paper texture on the case study panels: fine grain plus a faint linen weave, drawn under the content */
 .folder, .tab, .ftab, .note { position: relative; isolation: isolate; }
-.folder::before, .tab::before, .ftab::before, .note::before {
+.folder::before, .tab::before, .ftab::before, .stab::before, .note::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
   background-image:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
@@ -378,7 +378,7 @@ a.subcard:hover .shot { transform: translateY(-4px); }
   transform: rotate(-0.6deg);
 }
 .pinned::after {
-  content: ""; position: absolute; z-index: 2; top: -26px; left: 28px; width: 27px; height: 78px;
+  content: ""; position: absolute; z-index: 2; top: -15px; left: 28px; width: 27px; height: 78px;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 80'%3E%3Cpath d='M11 30 V10 a5 5 0 0 1 10 0 V64 a9 9 0 0 1 -18 0 V9 a7 7 0 0 1 14 0 V52' fill='none' stroke='%23656C71' stroke-width='3.4' stroke-linecap='round'/%3E%3Cpath d='M11 30 V10 a5 5 0 0 1 10 0 V64 a9 9 0 0 1 -18 0 V9 a7 7 0 0 1 14 0 V52' fill='none' stroke='%23D9DEE1' stroke-width='1.3' stroke-linecap='round' transform='translate(-0.6 -0.6)'/%3E%3C/svg%3E") no-repeat center / contain;
   transform: rotate(-12deg); filter: drop-shadow(1px 2px 1.5px rgba(0,0,0,0.35)); pointer-events: none;
 }
@@ -428,3 +428,124 @@ a.subcard:hover .shot { transform: translateY(-4px); }
   .fb-book { transition: none; }
   .site-header, .site-header .wrap, .wordmark, .tab, .ftab { transition: none; }
 }
+
+/* ===== Cardstock folders (v2): felt-paper texture and flared tabs ===== */
+.tabs, .ftabs { gap: 18px; padding-inline: 22px; align-items: flex-end; }
+.tab, .ftab {
+  --r: 12px;
+  border-radius: 12px 12px 0 0; padding-inline: 28px; justify-content: center;
+}
+.tab.is-active, .ftab.is-active { padding-top: 14px; }
+/* Concave shoulders where the active tab curves into its card (colors match each paper after its texture) */
+.tab.is-active::after, .ftab.is-active::after {
+  content: ""; position: absolute; left: calc(var(--r) * -1); right: calc(var(--r) * -1); bottom: 0; height: var(--r);
+  background:
+    radial-gradient(circle at 0 0, transparent calc(var(--r) - 0.5px), var(--shoulder) var(--r)) left bottom / var(--r) var(--r) no-repeat,
+    radial-gradient(circle at 100% 0, transparent calc(var(--r) - 0.5px), var(--shoulder) var(--r)) right bottom / var(--r) var(--r) no-repeat;
+  pointer-events: none;
+}
+.ftab.is-active::after { bottom: 8px; }
+.tab-1, .ftab-1 { --shoulder: #D1D4D6; }
+.tab-2, .ftab-2 { --shoulder: #AFB4B8; }
+.tab-3, .ftab-3 { --shoulder: #676F75; }
+
+.folder, .wpanel { border-radius: 6px; }
+.folder { border-top-left-radius: 6px; }
+.folder, .wpanel {
+  box-shadow: 0 1px 1px rgba(0,0,0,0.3), 0 26px 44px -20px rgba(0,0,0,0.7);
+}
+
+/* Felt cardstock: dense fine fibre plus soft mottling, no weave lines */
+.folder::before, .tab::before, .ftab::before, .stab::before, .note::before {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  background-size: 300px 300px, 700px 700px;
+  opacity: 0.5;
+}
+.folder.is-dark::before, .tab-3::before, .ftab-3::before { opacity: 0.8; }
+
+@media (max-width: 560px) {
+  .tabs, .ftabs { gap: 12px; padding-inline: 10px; }
+  .tab, .ftab { --r: 8px; padding-inline: 6px; white-space: normal; text-align: center; line-height: 1.2; }
+  .tab-label { overflow: visible; }
+}
+/* Case study pages: inactive tabs tuck behind the card, the active one sits on top of it */
+.tabs { z-index: auto; }
+.tab { position: relative; z-index: 0; margin-bottom: -8px; padding-bottom: 19px; }
+.tab.is-active { z-index: 2; }
+.tab.is-active::after { bottom: 8px; }
+.tabs + .folder { z-index: 1; }
+@media (max-width: 560px) { .tab { padding-bottom: 17px; } }
+
+/* Home: case study folders piled on top of each other like file folders. Only a strip of each back folder shows,
+   with its tab poking up; the front folder shows in full. Clicking a back folder's tab (or anywhere on its strip) moves it
+   to the front of the pile; the front folder's title and button open its case study. */
+.folder-stack { --step: 56px; display: grid; padding-top: 52px; padding-bottom: calc(var(--step) * 2); }
+.scard {
+  --tab-h: 46px;
+  grid-area: 1 / 1; align-self: start;
+  display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(24px, 4vw, 48px); align-items: center;
+  padding: clamp(28px, 4vw, 44px) clamp(20px, 4vw, 44px) clamp(32px, 5vw, 48px);
+  border-radius: 6px; text-decoration: none; color: var(--ink);
+  box-shadow: 0 -12px 24px -10px rgba(0,0,0,0.5), 0 -2px 4px -2px rgba(0,0,0,0.3), 0 26px 44px -20px rgba(0,0,0,0.7);
+  --slot: 0; z-index: var(--slot);
+  transform: translateY(calc(var(--slot) * var(--step)));
+  transition: transform 0.5s cubic-bezier(.2,.7,.2,1);
+}
+.scard:nth-child(2) { --slot: 1; }
+.scard:nth-child(3) { --slot: 2; }
+.scard:not(.is-front) { cursor: pointer; }
+.scard:not(.is-front) .stab:hover { filter: brightness(1.04); }
+.scard h3 a { color: inherit; text-decoration: none; }
+.scard h3 a:hover { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+.stab {
+  --r: 12px;
+  position: absolute; isolation: isolate; bottom: 100%; z-index: 1; display: flex; align-items: baseline; gap: 10px;
+  padding: 12px 30px; border: 0; border-radius: 12px 12px 0 0; white-space: nowrap; cursor: pointer;
+  font-family: var(--font-display); font-weight: 500; font-size: 1rem; line-height: 1.4;
+  background: var(--panel); color: var(--ink);
+  box-shadow: 0 -8px 16px -8px rgba(0,0,0,0.45);
+}
+.stab .tab-num { font-family: var(--font-label); font-size: 0.78rem; letter-spacing: 0.04em; opacity: 0.8; }
+.stab:focus-visible { outline: 2px solid #87C1D4; outline-offset: 2px; }
+.scard.is-front .stab { cursor: default; }
+.stab::after {
+  content: ""; position: absolute; left: calc(var(--r) * -1); right: calc(var(--r) * -1); bottom: 0; height: var(--r);
+  background:
+    radial-gradient(circle at 0 0, transparent calc(var(--r) - 0.5px), var(--shoulder) var(--r)) left bottom / var(--r) var(--r) no-repeat,
+    radial-gradient(circle at 100% 0, transparent calc(var(--r) - 0.5px), var(--shoulder) var(--r)) right bottom / var(--r) var(--r) no-repeat;
+  pointer-events: none;
+}
+.scard-3 .stab { left: 28px; }
+.scard-2 .stab { right: 28px; }
+.scard-1 .stab { left: 28px; }
+.scard .pinned::after { top: -12px; }
+
+@media (max-width: 860px) {
+  .scard { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .folder-stack { --step: 50px; padding-top: 44px; }
+  .scard { --tab-h: 40px; padding-top: 34px; }
+  .stab { --r: 8px; padding: 10px 18px; font-size: 0.92rem; }
+  .stab .tab-num { display: none; }
+  .scard-3 .stab, .scard-1 .stab { left: 14px; }
+  .scard-2 .stab { right: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .scard { transition: none; } }
+/* The folder buttons fill in on hover so they read as buttons */
+.btn-panel { transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; }
+.btn-panel:hover, .btn-panel:focus-visible { background: var(--ink); border-color: var(--ink); color: var(--panel); }
+/* Square corners on the home folders; the tabs stay rounded */
+.scard { border-radius: 0; }
+/* Uneven shadow onto the page: heavier toward the lower right, lighter on the left, like paper lifting off a desk */
+.scard {
+  box-shadow:
+    0 -12px 24px -10px rgba(0,0,0,0.5), 0 -2px 4px -2px rgba(0,0,0,0.3),
+    -5px 12px 16px -10px rgba(0,0,0,0.7),
+    16px 24px 30px -8px rgba(0,0,0,0.85),
+    44px 46px 70px -24px rgba(0,0,0,0.8);
+}
+/* Lighter shadow under the clipped card photos */
+.pinned .shot { box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 4px 8px -4px rgba(0,0,0,0.18); }
