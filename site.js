@@ -221,3 +221,20 @@ document.querySelectorAll('.folder-stack').forEach(function (stack) {
   });
   render();
 });
+
+// Home "More Work" carousel: arrow buttons scroll by most of a screen; they dim at either end.
+document.querySelectorAll('#more-work').forEach(function (sec) {
+  var car = sec.querySelector('.carousel'), prev = sec.querySelector('.car-prev'), next = sec.querySelector('.car-next');
+  function update() {
+    var max = car.scrollWidth - car.clientWidth - 2;
+    prev.disabled = car.scrollLeft <= 2;
+    next.disabled = car.scrollLeft >= max;
+  }
+  function go(dir) { car.scrollBy({ left: dir * car.clientWidth * 0.75, behavior: 'smooth' }); }
+  prev.addEventListener('click', function () { go(-1); });
+  next.addEventListener('click', function () { go(1); });
+  car.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  window.addEventListener('load', update);
+  update();
+});

@@ -7,14 +7,17 @@
 <meta name="description" content="Madison Preston, Multimedia Brand Designer. Brand systems, photography, print, apparel, and spaces.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@400;500&family=Caveat:wght@600&display=swap">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="home">
 
 <header class="site-header">
   <div class="wrap">
-    <a class="wordmark" href="index.html">Madison Preston</a>
+    <div class="brand">
+      <a class="wordmark" href="index.html">Madison Preston</a>
+      <span class="brand-sub">Multimedia Brand Designer</span>
+    </div>
     <nav class="nav" aria-label="Main">
       <a href="work.html">Work</a>
       <a href="#process">Process</a>
@@ -27,9 +30,12 @@
 <main>
   <section class="hero">
     <div class="wrap">
-      <p class="eyebrow">Multimedia Brand Designer</p>
-      <h1>Design lives between the lines.</h1>
-      <p class="lead">Your brand already has a story. The ones that make people feel something go beyond words: how a brand looks, how it works, and the spaces we walk into. I design the world your story lives in.</p>
+      <div class="hero-paper">
+        <span class="tape tape-l" aria-hidden="true"></span>
+        <span class="tape tape-r" aria-hidden="true"></span>
+        <h1>Design lives between the lines.</h1>
+        <p class="lead">Your brand already has a story. The ones that make people feel something go beyond words: how a brand looks, how it works, and the spaces we walk into. I design the world your story lives in.</p>
+      </div>
       <div class="hero-actions">
         <a class="btn btn-solid" href="#work">See the Work</a>
         <a class="btn btn-ghost" href="#contact">Get in Touch</a>
@@ -54,7 +60,7 @@
           <div class="wpanel-text">
             <h3><a href="uplift-at-work.html">Uplift at Work: Web Redesign &amp; Pitch Deck</a></h3>
             <p>A landing page and pitch deck that took companies from their first click to booking training for their managers.</p>
-            <a class="btn btn-panel" href="uplift-at-work.html">Read Case Study →</a>
+            <a class="btn btn-panel" href="uplift-at-work.html">Read Case Study</a>
           </div>
         </div>
         <div class="folder scard scard-2 is-green" data-href="brand-photography.html">
@@ -68,7 +74,7 @@
           <div class="wpanel-text">
             <h3><a href="brand-photography.html">Brand Photography: Setting the Tone</a></h3>
             <p>One photoshoot gave Youth Era a personality, and changed every material that came after it.</p>
-            <a class="btn btn-panel" href="brand-photography.html">Read Case Study →</a>
+            <a class="btn btn-panel" href="brand-photography.html">Read Case Study</a>
           </div>
         </div>
         <div class="folder scard scard-1" data-href="youth-era.html">
@@ -82,7 +88,7 @@
           <div class="wpanel-text">
             <h3><a href="youth-era.html">Youth Era: From Seven Logos to One Brand</a></h3>
             <p>Six youth community programs, seven logos, and visitors who didn't know they were inside Youth Era. I made it one cohesive company.</p>
-            <a class="btn btn-panel" href="youth-era.html">Read Case Study →</a>
+            <a class="btn btn-panel" href="youth-era.html">Read Case Study</a>
           </div>
         </div>
       </div>
@@ -165,6 +171,82 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section" id="more-work" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="section-head more-head">
+        <h2 id="more-title">More Work</h2>
+        <div class="car-controls">
+          <button type="button" class="car-btn car-prev" aria-label="Previous pieces">←</button>
+          <button type="button" class="car-btn car-next" aria-label="More pieces">→</button>
+        </div>
+      </div>
+    </div>
+    <div class="carousel" tabindex="0" role="region" aria-label="More work, scrolls sideways">
+      <ul class="car-track">
+          <li class="slide">
+            <a class="slide-link" href="work.html#nul-title">
+              <div class="slide-img" style="--ratio: 16 / 9"><img src="images/nulia-01.jpg" alt="Illustrated title card: coworkers talking in a bright office, titled Share Files from OneDrive" loading="lazy"></div>
+              <p class="slide-cap"><span class="slide-tag">Nulia</span>Title card: Share Files from OneDrive</p>
+            </a>
+          </li>
+          <li class="slide">
+            <a class="slide-link" href="work.html#nul-title">
+              <div class="slide-img" style="--ratio: 16 / 9"><img src="images/nulia-02.jpg" alt="Illustrated title card: a team reviewing a chart on a wall screen, titled Navigate OneDrive" loading="lazy"></div>
+              <p class="slide-cap"><span class="slide-tag">Nulia</span>Title card: Navigate OneDrive</p>
+            </a>
+          </li>
+          <li class="slide">
+            <a class="slide-link" href="work.html#nul-title">
+              <div class="slide-img" style="--ratio: 16 / 9"><img src="images/nulia-03.jpg" alt="Illustrated title card: people working in an open office, titled Lead Effective Meetings in Teams" loading="lazy"></div>
+              <p class="slide-cap"><span class="slide-tag">Nulia</span>Title card: Lead Effective Meetings in Teams</p>
+            </a>
+          </li>
+          <li class="slide">
+            <a class="slide-link" href="uplift-at-work.html">
+              <div class="slide-img" style="--ratio: 16 / 9"><img src="images/deck-01.jpg" alt="Slide from the Uplift at Work pitch deck" loading="lazy"></div>
+              <p class="slide-cap"><span class="slide-tag">Uplift at Work</span>Pitch deck</p>
+            </a>
+          </li>
+          <li class="slide">
+            <a class="slide-link" href="erazine.html">
+              <div class="slide-img" style="--ratio: 1805 / 1168"><img src="images/erazine/spread-1.jpg" alt="A two-page spread from ERA'ZINE, Youth Era's internal newsletter" loading="lazy"></div>
+              <p class="slide-cap"><span class="slide-tag">Youth Era</span>ERA'ZINE spread</p>
+            </a>
+          </li>
+          <li class="slide">
+            <a class="slide-link" href="print-materials.html">
+              <div class="slide-img" style="--ratio: 1100 / 1385"><img src="images/print-flyer.webp" alt="Youth Era drop-in center flyer" loading="lazy"></div>
+              <p class="slide-cap"><span class="slide-tag">Youth Era</span>Drop-in center flyer</p>
+            </a>
+          </li>
+          <li class="slide">
+            <a class="slide-link" href="brand-photography.html">
+              <div class="slide-img" style="--ratio: 2 / 3"><img src="images/apparel-01.jpg" alt="Youth Era apparel product photo" loading="lazy"></div>
+              <p class="slide-cap"><span class="slide-tag">Youth Era</span>Apparel</p>
+            </a>
+          </li>
+          <li class="slide">
+            <a class="slide-link" href="brand-photography.html">
+              <div class="slide-img" style="--ratio: 3 / 2"><img src="images/photo-04.jpg" alt="Youth Era brand photography" loading="lazy"></div>
+              <p class="slide-cap"><span class="slide-tag">Youth Era</span>Brand photography</p>
+            </a>
+          </li>
+          <li class="slide">
+            <a class="slide-link" href="clackamas-renovation.html">
+              <div class="slide-img" style="--ratio: 2400 / 1597"><img src="images/reno-after-1.jpg" alt="The renovated Youth Era Clackamas center" loading="lazy"></div>
+              <p class="slide-cap"><span class="slide-tag">Youth Era</span>Clackamas center renovation</p>
+            </a>
+          </li>
+          <li class="slide">
+            <a class="slide-link" href="print-materials.html">
+              <div class="slide-img" style="--ratio: 2400 / 1597"><img src="images/print-sticker-1.jpg" alt="Youth Era stickers" loading="lazy"></div>
+              <p class="slide-cap"><span class="slide-tag">Youth Era</span>Stickers</p>
+            </a>
+          </li>
+      </ul>
     </div>
   </section>
 

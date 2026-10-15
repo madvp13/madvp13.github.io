@@ -549,3 +549,341 @@ a.subcard:hover .shot { transform: translateY(-4px); }
 }
 /* Lighter shadow under the clipped card photos */
 .pinned .shot { box-shadow: 0 1px 2px rgba(0,0,0,0.12), 0 4px 8px -4px rgba(0,0,0,0.18); }
+
+/* ===== Handwritten hero title (both color modes) ===== */
+:root { --font-hand: "Caveat", "Bradley Hand", "Segoe Print", cursive; }
+.hero h1 {
+  font-family: var(--font-hand); font-weight: 600; letter-spacing: 0;
+  font-size: clamp(3.3rem, 8.4vw, 6rem); line-height: 0.92; max-width: 13ch; margin-bottom: 28px;
+}
+/* The paper and tape only appear in light mode; in dark mode the hero looks as it did */
+.tape { display: none; }
+
+/* ===== Light mode: cool off-white with faint coral graph paper on the home page ===== */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #EEF2F3;
+    --surface: #E1E7E9;
+    --ink: #17191B;
+    --muted: #535A5E;
+    --line: #CBD2D5;
+    --accent: #2B6377;
+    --hero-ink: #A83D32;
+    --ph-ink: #6B7277;
+    --grid: rgba(232, 126, 106, 0.32);
+    --paper: #FBFBF9;
+    color-scheme: light;
+    --paper-hero-ink: #A83D32;
+    --paper-shoulder: #F4F4F2;
+    --sticker-1: #E07A63; --sticker-2: #A9C2CA; --sticker-3: #6F7B5F;
+  }
+  .stab:focus-visible { outline-color: var(--accent); }
+}
+
+/* ===== Paper look, shared by both modes (colors come from each mode's tokens) ===== */
+@media all {
+  /* Graph paper across the whole home page */
+  body.home {
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-position: center top;
+  }
+  /* Header: clear at the top so the grid runs behind it; once you scroll it turns solid off-white with no lines */
+  .home .site-header { background: transparent; transition: border-color 0.3s ease, background-color 0.3s ease; }
+  .home .site-header.is-scrolled { background: var(--bg); }
+  .home .site-footer { background: var(--bg); }
+  /* The process band would double up on the grid, so its notes sit straight on the page */
+  .home .grid-band { background: none; border-block: 0; }
+
+  /* Hero: headline and summary on a sheet of paper taped to the grid */
+  .hero-paper {
+    position: relative; isolation: isolate; max-width: 760px;
+    padding: clamp(40px, 5.5vw, 64px) clamp(26px, 5vw, 60px) clamp(36px, 5vw, 56px);
+    background: var(--paper); transform: rotate(-1deg);
+    box-shadow:
+      0 1px 2px rgba(40, 30, 25, 0.1),
+      4px 8px 12px -8px rgba(40, 30, 25, 0.16);
+  }
+  .hero-paper::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; z-index: -1; mix-blend-mode: multiply; opacity: 0.25;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+    background-size: 300px 300px;
+  }
+  .hero-paper h1 { margin-bottom: 22px; max-width: none; }
+  .hero .eyebrow { margin-bottom: 40px; }
+  .hero-paper .lead { color: #474E52; }
+  .hero-actions { margin-top: 40px; }
+
+  /* Masking tape: translucent, with torn ends */
+  .tape {
+    display: block; position: absolute; top: -16px; width: 118px; height: 34px; z-index: 2;
+    background: rgba(226, 218, 196, 0.72);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    clip-path: polygon(0% 8%, 3% 0%, 6% 10%, 9% 2%, 12% 6%, 88% 4%, 91% 0%, 94% 9%, 97% 1%, 100% 7%,
+                       100% 92%, 97% 100%, 94% 90%, 91% 98%, 88% 93%, 12% 95%, 9% 100%, 6% 91%, 3% 99%, 0% 93%);
+  }
+  .tape::after {
+    content: ""; position: absolute; inset: 0;
+    background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.12) 0 2px, transparent 2px 5px);
+  }
+  .tape-l { left: -30px; transform: rotate(-32deg); }
+  .tape-r { right: -30px; transform: rotate(28deg); }
+
+}
+@media (prefers-color-scheme: light) {
+  /* Softer shadows for paper on a light page */
+  .note { box-shadow: 0 1px 2px rgba(40, 30, 25, 0.1), 0 12px 20px -12px rgba(40, 30, 25, 0.35); }
+  .folder, .wpanel { box-shadow: 0 1px 1px rgba(0,0,0,0.12), 0 22px 36px -20px rgba(0,0,0,0.35); }
+  .scard {
+    box-shadow:
+      0 -10px 20px -12px rgba(0,0,0,0.25), 0 -2px 4px -2px rgba(0,0,0,0.12),
+      -5px 12px 16px -10px rgba(0,0,0,0.3),
+      16px 24px 30px -10px rgba(0,0,0,0.3);
+  }
+  .stab { box-shadow: 0 -6px 12px -8px rgba(0,0,0,0.25); }
+}
+
+@media (max-width: 560px) {
+  .hero-paper { transform: rotate(-0.6deg); }
+  .hero .eyebrow { margin-bottom: 30px; }
+  .tape { width: 92px; height: 28px; top: -13px; }
+  .tape-l { left: -18px; }
+  .tape-r { right: -18px; }
+}
+
+/* ===== Round 2: process notes match the hero paper; grid stops at Where I've Worked (both modes) ===== */
+@media all {
+  /* Process notes: same white and grain as the hero paper */
+  .note { background: var(--paper); }
+  .note::before {
+    mix-blend-mode: multiply; opacity: 0.25;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+    background-size: 300px 300px;
+  }
+
+  /* Graph paper stops at Where I've Worked; everything below is the plain paper color with no lines */
+  .home #experience, .home .contact, .home .site-footer { background: var(--bg); }
+  .home #experience { border-top: 1px solid var(--line); }
+}
+
+/* ===== Round 3: more room after the timeline, and a hand-drawn timeline line ===== */
+#experience { padding-bottom: clamp(16px, 2vw, 24px); }
+
+/* The line is a wobbly pen stroke (two passes, like it was drawn by hand), colored with the accent through a mask */
+.jobs::before {
+  top: -1px; height: 14px; background: var(--accent); opacity: 1;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 14' preserveAspectRatio='none'%3E%3Cpath d='M3 6.53 S 86 6.80, 169 7.08 S 252 6.92, 334 6.77 S 417 6.98, 500 7.19 S 583 7.21, 666 7.23 S 748 6.72, 831 6.22 S 914 6.17, 997 6.12' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M12 6.53 S 110 6.61, 207 6.68 S 305 6.94, 402 7.19 S 500 6.87, 598 6.55 S 695 6.58, 793 6.61 S 890 6.67, 988 6.72' fill='none' stroke='black' stroke-opacity='0.45' stroke-width='1.6' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 14' preserveAspectRatio='none'%3E%3Cpath d='M3 6.53 S 86 6.80, 169 7.08 S 252 6.92, 334 6.77 S 417 6.98, 500 7.19 S 583 7.21, 666 7.23 S 748 6.72, 831 6.22 S 914 6.17, 997 6.12' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M12 6.53 S 110 6.61, 207 6.68 S 305 6.94, 402 7.19 S 500 6.87, 598 6.55 S 695 6.58, 793 6.61 S 890 6.67, 988 6.72' fill='none' stroke='black' stroke-opacity='0.45' stroke-width='1.6' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+}
+.job::before { z-index: 1; }
+@media (max-width: 860px) {
+  .jobs::before {
+    top: 4px; bottom: 4px; left: -1px; width: 14px; height: auto;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 1000' preserveAspectRatio='none'%3E%3Cpath d='M6.53 3 S 6.80 86, 7.08 169 S 6.92 252, 6.77 334 S 6.98 417, 7.19 500 S 7.21 583, 7.23 666 S 6.72 748, 6.22 831 S 6.17 914, 6.12 997' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M6.53 12 S 6.61 110, 6.68 207 S 6.94 305, 7.19 402 S 6.87 500, 6.55 598 S 6.58 695, 6.61 793 S 6.67 890, 6.72 988' fill='none' stroke='black' stroke-opacity='0.45' stroke-width='1.6' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 1000' preserveAspectRatio='none'%3E%3Cpath d='M6.53 3 S 6.80 86, 7.08 169 S 6.92 252, 6.77 334 S 6.98 417, 7.19 500 S 7.21 583, 7.23 666 S 6.72 748, 6.22 831 S 6.17 914, 6.12 997' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M6.53 12 S 6.61 110, 6.68 207 S 6.94 305, 7.19 402 S 6.87 500, 6.55 598 S 6.58 695, 6.61 793 S 6.67 890, 6.72 988' fill='none' stroke='black' stroke-opacity='0.45' stroke-width='1.6' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  }
+}
+
+/* ===== Round 4: section headlines in the hero's handwriting (home page) ===== */
+.home .section-head h2, .home .contact h2 {
+  font-family: var(--font-hand); font-weight: 600; letter-spacing: 0; line-height: 1;
+  font-size: clamp(2.6rem, 5.4vw, 3.8rem);
+}
+.home .contact h2 { font-size: clamp(3rem, 6.4vw, 4.6rem); }
+
+/* ===== Round 7: case study folder colors (both modes) ===== */
+/* 01 Youth Era: the same white paper as the hero and process cards
+   02 Brand Photography: soft dusty blue
+   03 Uplift at Work: dark earthy terracotta */
+@media all {
+  :root {
+    --tab-1: var(--paper); --tab-1-ink: #17191B;
+    --tab-2: #D4E4E9;      --tab-2-ink: #1C2427;
+    --tab-3: #6C3D29;      --tab-3-ink: #FBF4EE;
+  }
+  .folder { --bg: #EFF0EC; }
+  .folder.is-green {
+    --bg: #B3C5CB; --ink: #1C2427; --muted: #435259;
+    --line: #9AAEB5; --accent: #1C2427; --ph-ink: #4A5960;
+    color: var(--ink);
+  }
+  .folder.is-dark {
+    --bg: #5C3423; --ink: #FBF4EE; --muted: #EAD3C4;
+    --line: #86553F; --accent: #FBF4EE; --ph-ink: #EAD3C4;
+  }
+  /* White folder and tab get the same light grain as the hero card so the whites match */
+  .folder:not(.is-green):not(.is-dark)::before, .tab-1::before, .ftab-1::before {
+    opacity: 0.25;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+    background-size: 300px 300px;
+  }
+  .tab-1, .ftab-1 { --shoulder: var(--paper-shoulder); }
+  .tab-2, .ftab-2 { --shoulder: #C3D1D6; }
+  .tab-3, .ftab-3 { --shoulder: #774935; }
+}
+
+/* ===== Round 8: title under the name in the header (all pages, both modes) ===== */
+/* The title is sized from the name's size, so it always runs a little shorter than "Madison Preston" */
+.site-header { --wm: 1.6rem; }
+.site-header.is-scrolled { --wm: 1.12rem; }
+@media (max-width: 560px) { .site-header:not(.is-scrolled) { --wm: 1.35rem; } }
+.brand { display: grid; gap: 3px; justify-items: start; }
+.brand-sub {
+  font-family: var(--font-label); font-size: calc(var(--wm) * 0.42); letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--muted); white-space: nowrap; line-height: 1.3; max-height: 2em; overflow: hidden;
+  transition: opacity 0.25s ease, max-height 0.3s ease;
+}
+/* Once scrolled the name gets small, so the title tucks away to keep the bar slim */
+.site-header.is-scrolled .brand-sub { opacity: 0; max-height: 0; }
+@media (prefers-reduced-motion: reduce) { .brand-sub { transition: none; } }
+
+/* ===== Round 9: strips of masking tape behind the Case Studies and Designing Your World headlines (both modes) ===== */
+@media all {
+  .home #work .section-head h2, .home #process .section-head h2 {
+    color: #17191B; position: relative; isolation: isolate; justify-self: start; padding: 0.06em 0.45em 0.1em 0.3em;
+    margin-left: -0.3em; /* keeps the words lined up with the column; the tape hangs a little past it */
+  }
+  .home #work .section-head h2::before, .home #process .section-head h2::before {
+    content: ""; position: absolute; z-index: -1; inset: 0.08em -0.2em 0.02em -0.15em;
+    background:
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0 2px, transparent 2px 5px),
+      rgba(226, 218, 196, 0.82);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    clip-path: polygon(0% 6%, 1.2% 0%, 2.4% 9%, 3.6% 2%, 4.8% 5%, 95% 3%, 96.4% 0%, 97.6% 8%, 98.8% 1%, 100% 6%,
+                       100% 93%, 98.8% 100%, 97.6% 91%, 96.4% 98%, 95% 94%, 4.8% 96%, 3.6% 100%, 2.4% 92%, 1.2% 99%, 0% 94%);
+  }
+  .home #work .section-head h2::before { transform: rotate(-1.2deg); }
+  .home #process .section-head h2::before { transform: rotate(0.9deg); }
+}
+
+/* ===== Round 10: tighter Designing Your World section, smaller note shadows, stickers (both modes) ===== */
+@media all {
+  .home #process .section-head { margin-bottom: 8px; }
+  .home #process .grid-band { padding-top: 12px; }
+  .note { box-shadow: 0 1px 1.5px rgba(40, 30, 25, 0.12), 2px 4px 7px -4px rgba(40, 30, 25, 0.22); }
+  /* A scalloped sticker on the top-left corner of each note, as if it holds the card to the page */
+  .note::after {
+    content: ""; position: absolute; top: -11px; left: -11px; width: 34px; height: 34px; z-index: 2;
+    /* The card's corner pressed up under the sticker: a faint ridge along each edge, and the card area a touch lifted */
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.035), rgba(0, 0, 0, 0.035)) 11px 10px / 100% 1px no-repeat,
+      linear-gradient(rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.07)) 11px 11px / 100% 1px no-repeat,
+      linear-gradient(rgba(0, 0, 0, 0.035), rgba(0, 0, 0, 0.035)) 10px 11px / 1px 100% no-repeat,
+      linear-gradient(rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.07)) 11px 12px / 1px 100% no-repeat,
+      linear-gradient(rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.02)) 11px 11px / 100% 100% no-repeat,
+      linear-gradient(140deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0) 55%),
+      var(--sticker);
+    /* Scalloped edge, like a seal sticker */
+    clip-path: polygon(100.0% 50.0%, 99.9% 51.6%, 99.6% 53.2%, 99.0% 54.8%, 98.3% 56.4%, 97.3% 57.8%, 96.0% 59.2%, 94.4% 60.4%, 91.5% 61.1%, 93.7% 63.2%, 94.4% 65.1%, 94.8% 66.9%, 95.0% 68.6%, 94.9% 70.3%, 94.6% 72.0%, 94.0% 73.5%, 93.3% 75.0%, 92.4% 76.4%, 91.3% 77.6%, 90.0% 78.7%, 88.6% 79.6%, 87.0% 80.4%, 85.3% 80.9%, 83.3% 81.2%, 80.4% 80.4%, 81.2% 83.3%, 80.9% 85.3%, 80.4% 87.0%, 79.6% 88.6%, 78.7% 90.0%, 77.6% 91.3%, 76.4% 92.4%, 75.0% 93.3%, 73.5% 94.0%, 72.0% 94.6%, 70.3% 94.9%, 68.6% 95.0%, 66.9% 94.8%, 65.1% 94.4%, 63.2% 93.7%, 61.1% 91.5%, 60.4% 94.4%, 59.2% 96.0%, 57.8% 97.3%, 56.4% 98.3%, 54.8% 99.0%, 53.2% 99.6%, 51.6% 99.9%, 50.0% 100.0%, 48.4% 99.9%, 46.8% 99.6%, 45.2% 99.0%, 43.6% 98.3%, 42.2% 97.3%, 40.8% 96.0%, 39.6% 94.4%, 38.9% 91.5%, 36.8% 93.7%, 34.9% 94.4%, 33.1% 94.8%, 31.4% 95.0%, 29.7% 94.9%, 28.0% 94.6%, 26.5% 94.0%, 25.0% 93.3%, 23.6% 92.4%, 22.4% 91.3%, 21.3% 90.0%, 20.4% 88.6%, 19.6% 87.0%, 19.1% 85.3%, 18.8% 83.3%, 19.6% 80.4%, 16.7% 81.2%, 14.7% 80.9%, 13.0% 80.4%, 11.4% 79.6%, 10.0% 78.7%, 8.7% 77.6%, 7.6% 76.4%, 6.7% 75.0%, 6.0% 73.5%, 5.4% 72.0%, 5.1% 70.3%, 5.0% 68.6%, 5.2% 66.9%, 5.6% 65.1%, 6.3% 63.2%, 8.5% 61.1%, 5.6% 60.4%, 4.0% 59.2%, 2.7% 57.8%, 1.7% 56.4%, 1.0% 54.8%, 0.4% 53.2%, 0.1% 51.6%, 0.0% 50.0%, 0.1% 48.4%, 0.4% 46.8%, 1.0% 45.2%, 1.7% 43.6%, 2.7% 42.2%, 4.0% 40.8%, 5.6% 39.6%, 8.5% 38.9%, 6.3% 36.8%, 5.6% 34.9%, 5.2% 33.1%, 5.0% 31.4%, 5.1% 29.7%, 5.4% 28.0%, 6.0% 26.5%, 6.7% 25.0%, 7.6% 23.6%, 8.7% 22.4%, 10.0% 21.3%, 11.4% 20.4%, 13.0% 19.6%, 14.7% 19.1%, 16.7% 18.8%, 19.6% 19.6%, 18.8% 16.7%, 19.1% 14.7%, 19.6% 13.0%, 20.4% 11.4%, 21.3% 10.0%, 22.4% 8.7%, 23.6% 7.6%, 25.0% 6.7%, 26.5% 6.0%, 28.0% 5.4%, 29.7% 5.1%, 31.4% 5.0%, 33.1% 5.2%, 34.9% 5.6%, 36.8% 6.3%, 38.9% 8.5%, 39.6% 5.6%, 40.8% 4.0%, 42.2% 2.7%, 43.6% 1.7%, 45.2% 1.0%, 46.8% 0.4%, 48.4% 0.1%, 50.0% 0.0%, 51.6% 0.1%, 53.2% 0.4%, 54.8% 1.0%, 56.4% 1.7%, 57.8% 2.7%, 59.2% 4.0%, 60.4% 5.6%, 61.1% 8.5%, 63.2% 6.3%, 65.1% 5.6%, 66.9% 5.2%, 68.6% 5.0%, 70.3% 5.1%, 72.0% 5.4%, 73.5% 6.0%, 75.0% 6.7%, 76.4% 7.6%, 77.6% 8.7%, 78.7% 10.0%, 79.6% 11.4%, 80.4% 13.0%, 80.9% 14.7%, 81.2% 16.7%, 80.4% 19.6%, 83.3% 18.8%, 85.3% 19.1%, 87.0% 19.6%, 88.6% 20.4%, 90.0% 21.3%, 91.3% 22.4%, 92.4% 23.6%, 93.3% 25.0%, 94.0% 26.5%, 94.6% 28.0%, 94.9% 29.7%, 95.0% 31.4%, 94.8% 33.1%, 94.4% 34.9%, 93.7% 36.8%, 91.5% 38.9%, 94.4% 39.6%, 96.0% 40.8%, 97.3% 42.2%, 98.3% 43.6%, 99.0% 45.2%, 99.6% 46.8%, 99.9% 48.4%);
+    filter: drop-shadow(0 0.5px 0.6px rgba(0, 0, 0, 0.25));
+  }
+  .note-1::after { --sticker: var(--sticker-1); }
+  .note-2::after { --sticker: var(--sticker-2); }
+  .note-3::after { --sticker: var(--sticker-3); }
+}
+
+/* ===== Round 11: smaller page title on All Work ===== */
+.hero-sm h1 { font-size: clamp(2.6rem, 5.4vw, 3.8rem); margin-bottom: 16px; }
+
+/* ===== Round 12 ===== */
+/* Where I've Worked and Let's Talk headlines in the hero's ink (coral in light mode, blue in dark) */
+.home #exp-title, .home #contact-title, .home #more-title { color: var(--hero-ink); }
+
+/* More Work carousel: a row of pieces that scrolls sideways, lined up with the page column and running off the right edge */
+.more-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 28px; }
+.car-controls { display: flex; gap: 10px; }
+.car-btn {
+  font: inherit; font-family: var(--font-display); font-size: 1.05rem; line-height: 1; color: var(--ink); background: transparent;
+  width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--ink); cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+}
+.car-btn:hover:not(:disabled) { background: var(--ink); color: var(--bg); }
+.car-btn:disabled { opacity: 0.3; cursor: default; }
+.car-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.carousel {
+  --edge: max(var(--gutter), calc((100% - var(--col)) / 2 + var(--gutter)));
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: var(--edge);
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.carousel::-webkit-scrollbar { display: none; }
+.carousel:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.car-track { list-style: none; margin: 0; padding: 6px var(--edge) 10px; display: flex; gap: clamp(16px, 2.2vw, 24px); width: max-content; }
+.slide { scroll-snap-align: start; margin: 0; display: grid; gap: 12px; align-content: start; }
+.slide-img {
+  height: clamp(190px, 20vw, 240px); aspect-ratio: var(--ratio); border-radius: 4px; overflow: hidden; background: var(--surface);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+.slide-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.slide-img:hover img { transform: scale(1.02); }
+.slide-cap { font-size: 0.92rem; line-height: 1.4; color: var(--ink); max-width: 36ch; }
+.slide-tag {
+  display: block; font-family: var(--font-label); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 2px;
+}
+@media (prefers-reduced-motion: reduce) { .slide-img img { transition: none; } .slide-img:hover img { transform: none; } }
+@media (max-width: 560px) { .car-btn { width: 40px; height: 40px; } }
+#experience + #more-work { padding-top: clamp(56px, 8vw, 96px); }
+.home #more-work { background: var(--bg); }
+
+/* More Work: each piece links to its project page */
+.slide-link { display: grid; gap: 12px; text-decoration: none; color: inherit; }
+.slide-link:hover .slide-img img { transform: scale(1.02); }
+.slide-link:hover .slide-cap { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.slide-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+@media (prefers-reduced-motion: reduce) { .slide-link:hover .slide-img img { transform: none; } }
+
+/* ===== Round 13: dark mode gets the paper look ===== */
+.hero-paper h1 { color: var(--paper-hero-ink); }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --grid: rgba(135, 193, 212, 0.28);      /* light blue graph lines */
+    --paper: #E6E8E6;                        /* paper a touch dimmer than in light mode, so it doesn't glare */
+    --paper-hero-ink: #A83D32;               /* same coral as light mode on the hero card */
+    --hero-ink: #F0957D;                     /* peach headlines on the dark page, same as the coral sticker (8.2:1) */
+    --paper-shoulder: #DCDEDC;
+    --sticker-1: #F0957D; --sticker-2: #87C1D4; --sticker-3: #A9BC8C;  /* brighter stickers that hold up on the dark page */
+  }
+  .home .site-header.is-scrolled { border-bottom-color: var(--line); }
+  .note { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 2px 5px 9px -4px rgba(0, 0, 0, 0.55); }
+  .hero-paper { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 4px 10px 16px -8px rgba(0, 0, 0, 0.6); }
+  /* Tape is less see-through on the dark page so it keeps its paper color */
+  .tape { background: rgba(222, 213, 190, 0.94); }
+  .home #work .section-head h2::before, .home #process .section-head h2::before {
+    background:
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0 2px, transparent 2px 5px),
+      rgba(222, 213, 190, 0.95);
+  }
+}
+
+/* Dark mode: timeline line, dots, and years in the same peach as the headlines */
+@media (prefers-color-scheme: dark) {
+  .jobs { --accent: var(--hero-ink); }
+}
+
+/* ===== Round 14 (light mode): black headlines at the bottom of the page; thin peach timeline ===== */
+@media (prefers-color-scheme: light) {
+  .home #exp-title, .home #more-title, .home #contact-title { color: var(--ink); }
+  /* The timeline no longer sits on graph paper, so the pen line is thinner, in the coral sticker's peach */
+  .jobs::before {
+    background: var(--sticker-1);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 14' preserveAspectRatio='none'%3E%3Cpath d='M3 6.53 S 86 6.80, 169 7.08 S 252 6.92, 334 6.77 S 417 6.98, 500 7.19 S 583 7.21, 666 7.23 S 748 6.72, 831 6.22 S 914 6.17, 997 6.12' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M12 6.53 S 110 6.61, 207 6.68 S 305 6.94, 402 7.19 S 500 6.87, 598 6.55 S 695 6.58, 793 6.61 S 890 6.67, 988 6.72' fill='none' stroke='black' stroke-opacity='0.45' stroke-width='0.9' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 14' preserveAspectRatio='none'%3E%3Cpath d='M3 6.53 S 86 6.80, 169 7.08 S 252 6.92, 334 6.77 S 417 6.98, 500 7.19 S 583 7.21, 666 7.23 S 748 6.72, 831 6.22 S 914 6.17, 997 6.12' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M12 6.53 S 110 6.61, 207 6.68 S 305 6.94, 402 7.19 S 500 6.87, 598 6.55 S 695 6.58, 793 6.61 S 890 6.67, 988 6.72' fill='none' stroke='black' stroke-opacity='0.45' stroke-width='0.9' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+  }
+  .job::before { border-color: var(--sticker-1); }
+  .job:first-child::before { background: var(--sticker-1); }
+}
+@media (prefers-color-scheme: light) and (max-width: 860px) {
+  .jobs::before { -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 1000' preserveAspectRatio='none'%3E%3Cpath d='M6.53 3 S 6.80 86, 7.08 169 S 6.92 252, 6.77 334 S 6.98 417, 7.19 500 S 7.21 583, 7.23 666 S 6.72 748, 6.22 831 S 6.17 914, 6.12 997' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M6.53 12 S 6.61 110, 6.68 207 S 6.94 305, 7.19 402 S 6.87 500, 6.55 598 S 6.58 695, 6.61 793 S 6.67 890, 6.72 988' fill='none' stroke='black' stroke-opacity='0.45' stroke-width='0.9' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 1000' preserveAspectRatio='none'%3E%3Cpath d='M6.53 3 S 6.80 86, 7.08 169 S 6.92 252, 6.77 334 S 6.98 417, 7.19 500 S 7.21 583, 7.23 666 S 6.72 748, 6.22 831 S 6.17 914, 6.12 997' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3Cpath d='M6.53 12 S 6.61 110, 6.68 207 S 6.94 305, 7.19 402 S 6.87 500, 6.55 598 S 6.58 695, 6.61 793 S 6.67 890, 6.72 988' fill='none' stroke='black' stroke-opacity='0.45' stroke-width='0.9' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
+}
+
+/* Timeline dots centered on the pen line (measured: 1.5px low on desktop, 1.4px right on phones) */
+.job::before { top: -37.75px; }
+@media (max-width: 860px) { .job::before { top: 4px; left: -33.6px; } }
+
+/* Light mode: experience years in a deeper peach-terracotta (4.67:1, passes AA for small text); the line stays the lighter peach */
+@media (prefers-color-scheme: light) {
+  .job .years { color: #B04E38; }
+}
