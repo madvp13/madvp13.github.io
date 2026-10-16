@@ -1020,3 +1020,13 @@ a.subcard:hover .shot { transform: translateY(-4px); }
 /* All Work title matches the Let's Talk headline: same size, black in light mode, peach in dark */
 .hero-sm h1 { font-size: clamp(3rem, 6.4vw, 4.6rem); line-height: 1; letter-spacing: 0; }
 @media (prefers-color-scheme: light) { .hero-sm h1 { color: var(--ink); } }
+
+/* ===== Case study pages: the folder sits on the same graph paper as the home page (both modes) ===== */
+body.case {
+  background-color: var(--bg);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 28px 28px; background-position: center top;
+}
+.case .site-header { background: transparent; transition: border-color 0.3s ease, background-color 0.3s ease; }
+.case .site-header.is-scrolled { background: var(--bg); border-bottom-color: var(--line); }
+.case .site-footer { background: var(--bg); }
