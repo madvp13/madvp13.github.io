@@ -238,3 +238,35 @@ document.querySelectorAll('#more-work').forEach(function (sec) {
   window.addEventListener('load', update);
   update();
 });
+
+// Experience board: a string runs from thumbtack to thumbtack, sagging a little between each pair.
+document.querySelectorAll('.jobs').forEach(function (board) {
+  var svg = board.querySelector('.string');
+  if (!svg) return;
+  var line = svg.querySelector('.string-line'), shadow = svg.querySelector('.string-shadow');
+  var tacks = Array.prototype.slice.call(board.querySelectorAll('.tack'));
+  function draw() {
+    var b = board.getBoundingClientRect();
+    svg.setAttribute('width', b.width); svg.setAttribute('height', b.height);
+    svg.setAttribute('viewBox', '0 0 ' + b.width + ' ' + b.height);
+    var pts = tacks.map(function (t) {
+      var r = t.getBoundingClientRect();
+      return [r.left + r.width / 2 - b.left, r.top + r.height / 2 - b.top];
+    });
+    if (pts.length < 2) return;
+    var d = 'M' + pts[0][0].toFixed(1) + ' ' + pts[0][1].toFixed(1);
+    for (var i = 1; i < pts.length; i++) {
+      var a = pts[i - 1], c = pts[i];
+      var len = Math.hypot(c[0] - a[0], c[1] - a[1]);
+      var sag = Math.min(14, len * 0.05);
+      var mx = (a[0] + c[0]) / 2, my = (a[1] + c[1]) / 2 + sag;
+      d += ' Q' + mx.toFixed(1) + ' ' + my.toFixed(1) + ' ' + c[0].toFixed(1) + ' ' + c[1].toFixed(1);
+    }
+    line.setAttribute('d', d); shadow.setAttribute('d', d);
+  }
+  draw();
+  window.addEventListener('resize', draw);
+  window.addEventListener('load', draw);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(draw);
+  if (window.ResizeObserver) new ResizeObserver(draw).observe(board);
+});

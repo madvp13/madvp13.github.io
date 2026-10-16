@@ -887,3 +887,132 @@ a.subcard:hover .shot { transform: translateY(-4px); }
 @media (prefers-color-scheme: light) {
   .job .years { color: #B04E38; }
 }
+
+/* ===== Round 15: Experience as paper notes pinned with thumbtacks and joined by a string (both modes) ===== */
+:root { --tack: #B04E38; --string: #E07A63; --note-years: #B04E38; }
+@media (prefers-color-scheme: dark) { :root { --tack: #F0957D; --string: #F0957D; --note-years: #A24631; } }
+
+/* Retire the drawn timeline and its dots */
+.jobs::before, .job::before { content: none !important; }
+
+.jobs {
+  position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px;
+  padding: 18px 0 8px; align-items: start;
+}
+.job {
+  position: relative; isolation: isolate; z-index: 1;
+  background: var(--paper); color: #17191B; --muted: #4A4F53;
+  padding: 46px 16px 20px;
+  box-shadow: 0 1px 2px rgba(40, 30, 25, 0.12), 2px 5px 9px -5px rgba(40, 30, 25, 0.3);
+}
+.job::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; mix-blend-mode: multiply; opacity: 0.25;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0 0.45  0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  background-size: 300px 300px;
+}
+.job .years { color: var(--note-years) !important; }
+.job h3 { color: #17191B; }
+/* Zigzag: every other note sits lower, like the cards in a string-and-pin board */
+.job:nth-child(2) { transform: rotate(-1.6deg); }
+.job:nth-child(3) { transform: rotate(1.3deg); margin-top: 64px; }
+.job:nth-child(4) { transform: rotate(-0.9deg); }
+.job:nth-child(5) { transform: rotate(1.7deg); margin-top: 64px; }
+.job:nth-child(6) { transform: rotate(-1.2deg); }
+
+/* Thumbtack: a domed pin head with a highlight and a little shadow on the paper */
+.tack {
+  position: absolute; z-index: 3; top: 12px; left: 50%; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.75) 0 2px, rgba(255, 255, 255, 0) 5px), var(--tack);
+  box-shadow: inset -1.5px -2px 3px rgba(0, 0, 0, 0.28), 2px 3px 3px rgba(0, 0, 0, 0.28);
+}
+
+/* The string sits over the notes on wide screens, running from tack to tack */
+.string { position: absolute; inset: 0; z-index: 2; overflow: visible; pointer-events: none; }
+.string path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.string-line { stroke: var(--string); stroke-width: 1.8; }
+.string-shadow { stroke: rgba(0, 0, 0, 0.18); stroke-width: 2; transform: translate(1px, 2px); filter: blur(0.6px); }
+
+@media (max-width: 860px) {
+  .jobs { grid-template-columns: minmax(0, 1fr); gap: 38px; padding: 12px 0 0; }
+  .job { width: 86%; margin-top: 0 !important; padding: 44px 20px 22px; }
+  .job:nth-child(odd) { justify-self: end; }
+  .job:nth-child(even) { justify-self: start; }
+  /* On a single column the string would cross the text, so it runs behind the paper and shows between notes */
+  .string { z-index: 0; }
+}
+
+/* ===== Round 16: experience notes as ruled index cards (both modes) ===== */
+/* Every line of text sits on a ruled line: the card uses one line pitch, and the red rule sits under the date */
+.job { --pitch: 24px; --rule-blue: rgba(110, 160, 182, 0.5); --rule-red: #E07A63;
+  display: flex; flex-direction: column; padding: 44px 16px 14px; }
+.job .years { margin-bottom: 8px; line-height: 1.2; }
+.job > div {
+  flex: 1; margin-inline: -16px; padding: 0 16px var(--pitch);
+  border-top: 2px solid var(--rule-red);
+  background: repeating-linear-gradient(to bottom, transparent 0 calc(var(--pitch) - 1px), var(--rule-blue) calc(var(--pitch) - 1px) var(--pitch));
+  background-position: 0 -4px;
+}
+.job h3, .job .title, .job p:not(.title) { line-height: var(--pitch); margin: 0; }
+.job h3 { font-size: 1.02rem; }
+.job .title { font-size: 0.86rem; }
+.job p:not(.title) { font-size: 0.9rem; }
+@media (prefers-color-scheme: dark) { .job { --rule-blue: rgba(95, 145, 168, 0.55); } }
+@media (max-width: 860px) {
+  .job { --pitch: 28px; padding: 44px 20px 14px; }
+  .job > div { margin-inline: -20px; padding-inline: 20px; background-position: 0 -6px; }
+  .job h3 { font-size: 1.12rem; }
+  .job .title { font-size: 0.95rem; }
+  .job p:not(.title) { font-size: 1rem; }
+}
+
+/* Job titles on the index cards in the hero coral (6.0:1 light card, 5.1:1 dark card) */
+.job .title { color: #A83D32; font-weight: 500; }
+
+/* ===== Round 17: desktop experience as landscape index cards in a two-column zigzag ===== */
+@media (min-width: 861px) {
+  .jobs { display: flex; flex-direction: column; gap: 0; padding: 12px 0 0; }
+  .job { width: 47%; --pitch: 28px; padding: 46px 26px 14px; }
+  .job > div { margin-inline: -26px; padding-inline: 26px; background-position: 0 -6px; }
+  .job h3 { font-size: 1.15rem; }
+  .job .title { font-size: 0.95rem; }
+  .job p:not(.title) { font-size: 1rem; }
+  /* Cards alternate left and right, each tucked up beside the one before it */
+  .job:nth-child(even) { align-self: flex-start; }
+  .job:nth-child(odd) { align-self: flex-end; }
+  .job + .job { margin-top: -84px !important; }
+  /* The thread runs behind the cards and shows in the gaps, as on phones */
+  .string { z-index: 0; }
+}
+/* Nulia sits partway up beside Youth Era: lower than level, not a full step down */
+@media (min-width: 861px) { .job:nth-child(3) { margin-top: -170px !important; } .job:nth-child(4) { margin-top: -48px !important; } }
+
+/* ===== Round 19: paper clips actually clip over the paper's edge =====
+   Each clip is two layers: the whole clip sits BEHIND the paper (so only the part above the edge shows),
+   and just the front loop is redrawn ON the paper, starting where the wire crosses the edge. */
+.pinned { isolation: isolate; }
+.pinned::before, .pinned::after {
+  content: ""; position: absolute; top: -12px; left: 28px; width: 27px; height: 78px; pointer-events: none;
+  transform: rotate(-12deg); filter: drop-shadow(1px 2px 1.5px rgba(0,0,0,0.35));
+}
+.pinned::before { z-index: -1; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 80'%3E%3Cpath d='M11 30 V10 a5 5 0 0 1 10 0 V64 a9 9 0 0 1 -18 0 V9 a7 7 0 0 1 14 0 V52' fill='none' stroke='%23656C71' stroke-width='3.4' stroke-linecap='round'/%3E%3Cpath d='M11 30 V10 a5 5 0 0 1 10 0 V64 a9 9 0 0 1 -18 0 V9 a7 7 0 0 1 14 0 V52' fill='none' stroke='%23D9DEE1' stroke-width='1.3' stroke-linecap='round' transform='translate(-0.6 -0.6)'/%3E%3C/svg%3E") no-repeat center / contain; }
+.pinned::after { z-index: 2; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 80'%3E%3Cpath d='M3 10.1 V64 a9 9 0 0 0 18 0 V13.9' fill='none' stroke='%23656C71' stroke-width='3.4' stroke-linecap='butt'/%3E%3Cpath d='M3 10.1 V64 a9 9 0 0 0 18 0 V13.9' fill='none' stroke='%23D9DEE1' stroke-width='1.3' stroke-linecap='butt' transform='translate(-0.6 -0.6)'/%3E%3C/svg%3E") no-repeat center / contain; }
+.scard .pinned::after { top: -12px; }
+
+
+/* ===== Round 20: Case Studies on a strip of peach tape with its own tear, near-black lettering (both modes) ===== */
+.home #work .section-head h2 { color: #17191B; }
+.home #work .section-head h2::before {
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0 2px, transparent 2px 6px),
+    rgba(224, 122, 99, 0.96) !important;   /* the peach sticker, #E07A63 */
+  clip-path: polygon(2.2% 0%, 40% 1.5%, 70% 0.4%, 99.0% 0%, 96.4% 8%, 98.8% 18%, 97.2% 31%, 99.6% 43%, 98.1% 55%, 100% 66%, 96.9% 79%, 99.2% 90%, 97.6% 100%, 65% 98.8%, 30% 100%, 0% 100%, 1.1% 93%, 0.6% 84%, 1.5% 71%, 0.3% 60%, 1.9% 47%, 0.8% 35%, 2.6% 22%, 1.4% 12%, 2.2% 0%) !important;
+  transform: rotate(-1.6deg) !important;
+}
+
+/* ===== Round 21: colored paper clips on the case study folders (peach, olive, blue) ===== */
+.scard-1 .pinned::before { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 80'%3E%3Cpath d='M11 30 V10 a5 5 0 0 1 10 0 V64 a9 9 0 0 1 -18 0 V9 a7 7 0 0 1 14 0 V52' fill='none' stroke='%23C9644D' stroke-width='3.4' stroke-linecap='round'/%3E%3Cpath d='M11 30 V10 a5 5 0 0 1 10 0 V64 a9 9 0 0 1 -18 0 V9 a7 7 0 0 1 14 0 V52' fill='none' stroke='%23F7BFAF' stroke-width='1.3' stroke-linecap='round' transform='translate(-0.6 -0.6)'/%3E%3C/svg%3E") no-repeat center / contain; }
+.scard-1 .pinned::after { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 80'%3E%3Cpath d='M3 10.1 V64 a9 9 0 0 0 18 0 V13.9' fill='none' stroke='%23C9644D' stroke-width='3.4' stroke-linecap='butt'/%3E%3Cpath d='M3 10.1 V64 a9 9 0 0 0 18 0 V13.9' fill='none' stroke='%23F7BFAF' stroke-width='1.3' stroke-linecap='butt' transform='translate(-0.6 -0.6)'/%3E%3C/svg%3E") no-repeat center / contain; }
+.scard-2 .pinned::before { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 80'%3E%3Cpath d='M11 30 V10 a5 5 0 0 1 10 0 V64 a9 9 0 0 1 -18 0 V9 a7 7 0 0 1 14 0 V52' fill='none' stroke='%235E6A4F' stroke-width='3.4' stroke-linecap='round'/%3E%3Cpath d='M11 30 V10 a5 5 0 0 1 10 0 V64 a9 9 0 0 1 -18 0 V9 a7 7 0 0 1 14 0 V52' fill='none' stroke='%23B3C49A' stroke-width='1.3' stroke-linecap='round' transform='translate(-0.6 -0.6)'/%3E%3C/svg%3E") no-repeat center / contain; }
+.scard-2 .pinned::after { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 80'%3E%3Cpath d='M3 10.1 V64 a9 9 0 0 0 18 0 V13.9' fill='none' stroke='%235E6A4F' stroke-width='3.4' stroke-linecap='butt'/%3E%3Cpath d='M3 10.1 V64 a9 9 0 0 0 18 0 V13.9' fill='none' stroke='%23B3C49A' stroke-width='1.3' stroke-linecap='butt' transform='translate(-0.6 -0.6)'/%3E%3C/svg%3E") no-repeat center / contain; }
+.scard-3 .pinned::before { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 80'%3E%3Cpath d='M11 30 V10 a5 5 0 0 1 10 0 V64 a9 9 0 0 1 -18 0 V9 a7 7 0 0 1 14 0 V52' fill='none' stroke='%236F98A6' stroke-width='3.4' stroke-linecap='round'/%3E%3Cpath d='M11 30 V10 a5 5 0 0 1 10 0 V64 a9 9 0 0 1 -18 0 V9 a7 7 0 0 1 14 0 V52' fill='none' stroke='%23D4E6EC' stroke-width='1.3' stroke-linecap='round' transform='translate(-0.6 -0.6)'/%3E%3C/svg%3E") no-repeat center / contain; }
+.scard-3 .pinned::after { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 80'%3E%3Cpath d='M3 10.1 V64 a9 9 0 0 0 18 0 V13.9' fill='none' stroke='%236F98A6' stroke-width='3.4' stroke-linecap='butt'/%3E%3Cpath d='M3 10.1 V64 a9 9 0 0 0 18 0 V13.9' fill='none' stroke='%23D4E6EC' stroke-width='1.3' stroke-linecap='butt' transform='translate(-0.6 -0.6)'/%3E%3C/svg%3E") no-repeat center / contain; }
